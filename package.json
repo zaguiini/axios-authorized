@@ -1,0 +1,42 @@
+{
+  "name": "axios-authorized",
+  "version": "1.0.0",
+  "description": "axios wrapper for REST APIs that needs authentication",
+  "main": "dist/index.js",
+  "author": "Luis Felipe Zaguini",
+  "license": "MIT",
+  "homepage": "https://github.com/zaguini/axios-authorized",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zaguini/axios-authorized.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zaguini/axios-authorized/issues",
+    "email": "luisfelipezaguini@gmail.com"
+  },
+  "keywords": [
+    "authorized",
+    "axios",
+    "instance",
+    "rest api",
+    "access token",
+    "refresh token",
+    "bearer",
+    "basic",
+    "authorization"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && babel src/ -d dist",
+    "prepublish": "yarn build"
+  },
+  "peerDependencies": {
+    "axios": "^0.18.0",
+    "invariant": "^2.2.4"
+  },
+  "devDependencies": {
+    "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "invariant": "^2.2.4"
+  }
+}
