@@ -54,7 +54,7 @@ The only argument for `createAuthorizedAxiosInstance` is an object with the prop
 
 ### tokenProvider
 
-Is an object that both `get`s and `set`s both the access and refresh tokens:
+Is an object with `getter`s and `setter`s for both the access and refresh tokens:
 
 ```js
 let accessToken = ''
@@ -75,20 +75,26 @@ const tokenProvider = {
 
 ### refreshTokenRequest
 
-A function that returns a `Promise` with both new tokens.
+A function that returns a `Promise` with both new tokens as an object (in the `resolve` function call).
 The `axios` instance and both old tokens are passed as arguments. Example:
 
 ```js
 function refreshTokenRequest(instance, oldTokens) {
-  return new Promise((resolve, reject) => {
-    instance.get('/token', {
-      header: {
-        Authorization: `Bearer ${oldTokens.refreshToken}`,
-      }
-    }).then(({ data }) => resolve({
-      accessToken: data.accessToken,
-      refreshToken: data.refreshToken,
-    })).catch(reject)
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await instance.get('/token', {
+        header: {
+          Authorization: `Bearer ${oldTokens.refreshToken}`,
+        }
+      })
+      
+      resolve({
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
+      })
+    } catch(e) {
+      reject(e)
+    }
   })
 }
 ```
