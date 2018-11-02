@@ -1,7 +1,7 @@
 {
   "name": "axios-authorized",
   "version": "1.0.0",
-  "description": "axios wrapper for REST APIs that needs authentication",
+  "description": "axios wrapper for authorized REST APIs",
   "main": "dist/index.js",
   "author": "Luis Felipe Zaguini",
   "license": "MIT",

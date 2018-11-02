@@ -1,6 +1,6 @@
 # axios-authorized
 
-[`axios`](https://github.com/axios/axios) wrapper for REST APIs that needs authentication
+[`axios`](https://github.com/axios/axios) wrapper for authorized REST APIs
 
 ---
 
