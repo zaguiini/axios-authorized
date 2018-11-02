@@ -9,6 +9,7 @@
 It is, often, a pain to consume REST APIs that need some kind of authorization.
 Basically, you need to have a valid `access_token` to consume one resource.
 If that `access_token` is invalid, though, you generally get one `401` error right in your face.
+
 To solve that, you must refresh your `access_token` using one `refresh_token` and retry the request.
 If everything goes wrong, then usually the user is logged out and sent back to the login page.
 
