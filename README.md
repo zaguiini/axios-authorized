@@ -20,7 +20,7 @@ So I've decided to make this simple and small (3kb minified) package to solve th
 
 Using `npm`/`yarn`:
 
-`npm install/yarn add axios-authorized`
+`npm install`/`yarn add` `axios-authorized`
 
 It uses `axios` as a peer-dependency, so don't forget to have `axios` installed!
 
@@ -76,7 +76,7 @@ const tokenProvider = {
 }
 ```
 
-The nice thing about it is that you can use `localStore` as it demands a `Promise` to be resolved.
+The nice thing about it is that you can use [`AsyncStorage`](https://facebook.github.io/react-native/docs/asyncstorage) as it demands a `Promise` to be resolved.
 **Even if you use a sync method (like get a cookie from the browser), you still need to resolve a `Promise`!!!**
 
 ### refreshTokenRequest
