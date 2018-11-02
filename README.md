@@ -14,7 +14,7 @@ To solve that, you must refresh your `access_token` using one `refresh_token` an
 If everything goes wrong, then usually the user is logged out and sent back to the login page.
 
 That is a lot of stuff and it seems to be a common pattern: I have faced that situation in, at least, four projects.
-So I've decided to make this simple package to solve this problem!
+So I've decided to make this simple and small (3kb minified) package to solve this problem!
 
 ## Installing
 
@@ -22,9 +22,11 @@ Using `npm`/`yarn`:
 
 `npm install/yarn add axios-authorized`
 
+It uses `axios` as a peer-dependency, so don't forget to have `axios` installed!
+
 ## Usage
 
-The `default` export contains a `function` that generates (returns) one ready-to-use `axios` instance. Example:
+The default export contains a `function` that generates (returns) one ready-to-use `axios` instance. Example:
 
 ```js
 import createAuthorizedAxiosInstance from 'axios-authorized'
@@ -36,7 +38,7 @@ const axios = createAuthorizedAxiosInstance({
 })
 
 axios.get('/me')
-  .then((response) => console.log(response))
+  .then((response) => console.log(response.data))
   .catch((e) => console.error('well, it did not work out so well...', e))
 ```
 
@@ -74,6 +76,9 @@ const tokenProvider = {
 }
 ```
 
+The nice thing about it is that you can use `localStore` as it demands a `Promise` to be resolved.
+**Even if you use a sync method (like get a cookie from the browser), you still need to resolve a `Promise`!!!**
+
 ### refreshTokenRequest
 
 A function that returns a `Promise` with both new tokens as an object (in the `resolve` function call).
@@ -109,6 +114,8 @@ function transformAuthorizationHeader(accessToken) {
   return `Bearer ${accessToken}`;
 }
 ```
+
+---
 
 ## License
 
