@@ -26,7 +26,7 @@ Using `npm`/`yarn`:
 
 ## Usage
 
-The default export contains a `function` that generates (returns) one ready-to-use `axios` instance. Example:
+The default export contains a `function` that adapts (returns) one existing `axios` instance. Example:
 
 ```js
 import authorizeAxiosInstance from 'axios-authorized'
