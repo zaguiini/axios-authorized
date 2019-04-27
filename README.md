@@ -73,7 +73,7 @@ The nice thing about it is that you can use
 [`AsyncStorage`](https://facebook.github.io/react-native/docs/asyncstorage),
 for example, as it demands a `Promise` to be resolved.
 
-**Even if you use a sync method (like get a cookie from the browser), you still need to resolve a `Promise`!!!**
+**Even if you use a sync method (like getting a cookie from the browser), you still need to resolve a `Promise`!!!**
 
 ### refreshTokenRequest (required)
 
