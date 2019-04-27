@@ -14,7 +14,7 @@ To solve that, you must refresh your `access_token` using one `refresh_token` an
 If everything goes wrong, then usually the user is logged out and sent back to the login page.
 
 That is a lot of stuff and it seems to be a common pattern: I have faced that situation in, at least, four projects.
-So I've decided to make this simple and small (3kb minified) package to solve this problem!
+So I've decided to make this simple and small package to solve this problem!
 
 ## Installing
 
@@ -22,40 +22,33 @@ Using `npm`/`yarn`:
 
 `npm install`/`yarn add` `axios-authorized`
 
-It uses `axios` as a peer-dependency, so don't forget to have `axios` installed!
+**It uses `axios` as a peer-dependency, so don't forget to have `axios` installed!**
 
 ## Usage
 
 The default export contains a `function` that generates (returns) one ready-to-use `axios` instance. Example:
 
 ```js
-import createAuthorizedAxiosInstance from 'axios-authorized'
+import authorizeAxiosInstance from 'axios-authorized'
 
-const axios = createAuthorizedAxiosInstance({
-  config,
+const network = authorizeAxiosInstance({
+  instance,
   tokenProvider,
   refreshTokenRequest,
 })
 
-axios.get('/me')
+network.get('/me')
   .then((response) => console.log(response.data))
   .catch((e) => console.error('well, it did not work out so well...', e))
 ```
 
-The only argument for `createAuthorizedAxiosInstance` is an object with the properties:
+The only argument for `authorizeAxiosInstance` is an options object with the properties:
 
-| *Name*                       | *Example*                                                                           | *Required* |
-|------------------------------|-------------------------------------------------------------------------------------|------------|
-| config                       | [All possible configurations](https://github.com/axios/axios/blob/master/README.md) | No         |
-| tokenProvider                | [tokenProvider](#tokenProvider)                                                     | Yes        |
-| refreshTokenRequest          | [refreshTokenRequest](#refreshTokenRequest)                                         | Yes        |
-| transformAuthorizationHeader | [transformAuthorizationHeader](#transformAuthorizationHeader)                       | No         |
-| errorCallback                | A regular callback function, called with no arguments                               | No         |
-| invalidStatus                | 401                                                                                 | No         |
+### instance (required)
 
-*(not required = default)
+A regular `axios` instance. `axios.create(...config)`, for example
 
-### tokenProvider
+### tokenProvider (required)
 
 Is an object with `getter`s and `setter`s for both the access and refresh tokens:
 
@@ -76,16 +69,19 @@ const tokenProvider = {
 }
 ```
 
-The nice thing about it is that you can use [`AsyncStorage`](https://facebook.github.io/react-native/docs/asyncstorage) as it demands a `Promise` to be resolved.
+The nice thing about it is that you can use
+[`AsyncStorage`](https://facebook.github.io/react-native/docs/asyncstorage),
+for example, as it demands a `Promise` to be resolved.
+
 **Even if you use a sync method (like get a cookie from the browser), you still need to resolve a `Promise`!!!**
 
-### refreshTokenRequest
+### refreshTokenRequest (required)
 
 A function that returns a `Promise` with both new tokens as an object (in the `resolve` function call).
 The `axios` instance and both old tokens are passed as arguments. Example:
 
 ```js
-function refreshTokenRequest(instance, oldTokens) {
+function refreshTokenRequest({ instance, oldTokens }) {
   return new Promise(async (resolve, reject) => {
     try {
       const { data } = await instance.get('/token', {
@@ -105,15 +101,36 @@ function refreshTokenRequest(instance, oldTokens) {
 }
 ```
 
-### transformAuthorizationHeader
+### setHeaders (optional)
 
-A function that returns the `Authorization` header string. The only argument passed is the `access_token`. Example:
+A function to set the request headers. Example:
 
 ```js
-function transformAuthorizationHeader(accessToken) {
-  return `Bearer ${accessToken}`;
+function setHeaders({ requestConfig, tokens }) {
+  requestConfig.headers.Authorization = `Bearer ${tokens.accessToken}`
+
+  return requestConfig
 }
 ```
+
+By default, it sets the `Authorization` header as a `Bearer` with the `accessToken`
+
+### isInvalid (optional)
+
+A callback to check if the desired request is invalid. Example:
+
+```js
+function isInvalid(response: AxiosResponse) {
+  return response.status === 401
+}
+```
+
+By default, it checks for a `401` status in the response headers
+
+### errorCallback (optional)
+
+Callback invoked when things go south (after a refresh token failure, for example).
+By default, it does nothing (noop)
 
 ---
 
