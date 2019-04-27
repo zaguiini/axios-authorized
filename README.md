@@ -132,6 +132,8 @@ By default, it checks for a `401` status in the response headers
 Callback invoked when things go south (after a refresh token failure, for example).
 By default, it does nothing (noop)
 
+**Note: the error is still thrown, just like a failed request would! That is just an external callback**
+
 ---
 
 ## License
