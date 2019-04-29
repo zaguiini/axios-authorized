@@ -18,7 +18,7 @@ export interface RefreshTokenRequestOptions {
 
 export interface AuthorizeAxiosInstanceOptions {
   instance: AxiosInstance
-  setHeaders: ({
+  setHeaders?: ({
     requestConfig,
     tokens,
   }: SetHeadersOptions) => AxiosRequestConfig
