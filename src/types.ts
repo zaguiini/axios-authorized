@@ -3,13 +3,13 @@ import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'ax
 type TokenTypes = 'accessToken' | 'refreshToken'
 
 type TokenGetterAndSetter = {
-  get: () => Promise<string>
-  set: (newToken: string) => Promise<void>
+  get: () => Promise<string | undefined | null>
+  set: (newToken: string | undefined | null) => Promise<void>
 }
 
 export type TokenProvider = { [K in TokenTypes]: TokenGetterAndSetter }
 
-export type Tokens = { [K in TokenTypes]: string }
+export type Tokens = { [K in TokenTypes]: string | undefined | null }
 
 export interface RefreshTokenRequestOptions {
   instance: AxiosInstance
