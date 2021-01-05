@@ -35,10 +35,10 @@
     "prepublish": "yarn build"
   },
   "peerDependencies": {
-    "axios": "^0.18.1"
+    "axios": "^0.21.1"
   },
   "devDependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "typescript": "^3.4.5"
   }
 }
